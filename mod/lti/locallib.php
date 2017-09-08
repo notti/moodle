@@ -456,6 +456,10 @@ function lti_build_request($instance, $typeconfig, $course, $typeid = null, $isl
         $requestparams['lis_person_contact_email_primary'] = $USER->email;
     }
 
+    if (groups_get_course_groupmode($course) != NOGROUPS) {
+        $requestparams['moodle_person_groupids'] = implode(',', groups_get_user_groups($course->id, $USER->id)[0]);
+    }
+
     return $requestparams;
 }
 
@@ -2542,6 +2546,7 @@ function lti_get_capabilities() {
        'ResourceLink.description' => 'resource_link_description',
        'User.id' => 'user_id',
        'User.username' => '$USER->username',
+       'Moodle.Person.groupIds' => 'moodle_person_groupids',
        'Person.name.full' => 'lis_person_name_full',
        'Person.name.given' => 'lis_person_name_given',
        'Person.name.family' => 'lis_person_name_family',
