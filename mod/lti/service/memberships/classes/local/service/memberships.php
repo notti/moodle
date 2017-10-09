@@ -187,6 +187,9 @@ EOD;
                     $member->resultSourcedId = json_encode(lti_build_sourcedid($lti->id, $user->id, $lti->servicesalt,
                                                            $lti->typeid));
                 }
+                if (in_array('Moodle.Person.userGroupIds', $enabledcapabilities)) {
+                    $member->userGroupIds = implode(',', groups_get_user_groups($id, $user->id)[0]);
+                }
                 $roles = explode(',', lti_get_ims_role($user->id, null, $id, true));
 
                 $membership = new \stdClass();
